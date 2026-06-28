@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"explorer.sortOrder": "type",
+		"explorer.fileNesting.patterns": {
+			"*.cs": "${capture}.*.cs,${capture}.designer.cs,${capture}.g.cs,${capture}.generated.cs,${capture}.run.json,${capture}.settings.json,${capture}.settings.*.json"
+		},
+		"explorer.fileNesting.enabled": true,
+		"workbench.iconTheme": null
+	}
+}

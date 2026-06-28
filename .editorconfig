@@ -1,0 +1,12 @@
+[*.cs]
+
+# CA2200: Rethrow to preserve stack details
+dotnet_diagnostic.CA2200.severity = none
+
+# IDE0044: Add readonly modifier
+dotnet_diagnostic.IDE0044.severity = none
+
+dotnet_diagnostic.CS0649.severity = none
+
+# IDE0270: Use coalesce expression
+dotnet_diagnostic.IDE0270.severity = none
