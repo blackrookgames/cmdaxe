@@ -19,7 +19,7 @@ namespace test
         [OptionFlag(desc: "Optional flag")]
         bool flag;
 
-        [OptionWArg(desc: "Day of the week")]
+        [OptionWArg(desc: "Day of the week", argType: "allcaps")]
         DayOfWeek day;
 
         [OptionWArg(shortcut: 'B', desc: "8-bit unsigned integer")]
@@ -52,7 +52,7 @@ namespace test
         [OptionWArg(name: "double", shortcut: 'F', desc: "Double-precision floating-point decimal")]
         double _double = 0.0f;
 
-        [OptionWArg(name: "name", desc: "Name; this option can be specified multiple times")]
+        [OptionWArg(name: "name", desc: "Name")]
         string[] names;
 
         #endregion

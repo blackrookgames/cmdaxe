@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace cmdaxe
 {
@@ -58,7 +59,7 @@ namespace cmdaxe
         {
             ArgumentNullException.ThrowIfNull(info);
             ArgumentNullException.ThrowIfNull(context);
-            int i;
+            int i, j;
             // Get parameters
             var allParams = new InternalParameters(GetType(), context.ParseFuncs);
             // Gather input
@@ -126,11 +127,11 @@ namespace cmdaxe
                 ++i;
             }
             // Check if user requested help
-            f_HelpRequest = false;
+            f_HelpRequest = allParams.Required.Count > 0 && required.Count == 0;
             foreach (var flag in optionFlags)
             {
                 allParams.Optional.TryGet(flag, out var flagInfo);
-                f_HelpRequest = ((IOptionFlag)flagInfo).IsHelp;
+                if (((IOptionFlag)flagInfo).IsHelp) f_HelpRequest = true;
             }
             if (f_HelpRequest)
             {
@@ -138,7 +139,241 @@ namespace cmdaxe
                 Console.WriteLine(info.GetSyntax());
                 Console.WriteLine(info.Desc);
                 Console.WriteLine();
-                // TODO: Print parameters
+                // Determine display width
+                int rawWidth;
+                try { rawWidth = Console.BufferWidth; }
+                catch
+                {
+                    try { rawWidth = Console.WindowWidth; }
+                    catch { rawWidth = 80; }
+                }
+                var displayWidth = rawWidth - 1;
+                // Determine name column data
+                var params_Obj = new IParameter[allParams.Count];
+                var params_Name = new string[allParams.Count, 2];
+                i = 0;
+                foreach (var param in allParams)
+                {
+                    if (param is not IOptionFlag flag) continue;
+                    if (!flag.IsHelp) continue;
+                    params_Obj[i] = param;
+                    j = 0;
+                    if (flag.Name != "")
+                        params_Name[i, j++] = $"--{flag.Name}";
+                    if (flag.Shortcut != '\0')
+                        params_Name[i, j++] = $"-{flag.Shortcut}";
+                    ++i;
+                }
+                foreach (var param in allParams)
+                {
+                    if (param is IRequired req)
+                    {
+                        params_Name[i, 0] = $"<{req.Name}>";
+                    }
+                    else if (param is IOptionFlag optFlag)
+                    {
+                        if (optFlag.IsHelp) continue;
+                        params_Name[i, 0] = $"--{optFlag.Name}";
+                        if (optFlag.Shortcut != '\0')
+                            params_Name[i, 1] = $"-{optFlag.Shortcut}";
+                    }
+                    else if (param is IOptionWArg optWArg)
+                    {
+                        string argName = string.IsNullOrEmpty(optWArg.ArgType) ? "value" : optWArg.ArgType;
+                        params_Name[i, 0] = $"--{optWArg.Name} <{argName}>";
+                        if (optWArg.Shortcut != '\0')
+                            params_Name[i, 1] = $"-{optWArg.Shortcut} <{argName}>";
+                    }
+                    params_Obj[i] = param;
+                    ++i;
+                }
+                var nameWidth = 0;
+                for (i = 0; i < allParams.Count; ++i)
+                {
+                    for (j = 0; j < 2; ++j)
+                    {
+                        var name = params_Name[i, j];
+                        if (name is not null && nameWidth < name.Length)
+                            nameWidth = name.Length;
+                    }
+                }
+                nameWidth += 4;
+                var noName = new string(' ', nameWidth);
+                // Determine description column width
+                var descWidth = displayWidth - nameWidth;
+                if (descWidth <= 0) return;
+                // Print parameters
+                for (i = 0; i < allParams.Count; ++i)
+                {
+                    var param = params_Obj[i];
+                    // Create name column
+                    var nameLines = new List<string>();
+                    for (j = 0; j < 2; ++j)
+                    {
+                        var name = params_Name[i, j];
+                        if (name is not null)
+                            nameLines.Add(name);
+                    }
+                    // Create description column
+                    var descLines = new List<string>();
+                    if (param.Desc is not null)
+                    {
+                        const int LONGWORD = 15;
+                        // Create final description
+                        var desc = param.Desc;
+                        if (param is IOptionWArg optWArg && optWArg.IsArray)
+                            desc += "\nThis option can be specified multiple times.";
+                        // Create lines
+                        var sb = new StringBuilder();
+                        j = 0;
+                        while (j < desc.Length)
+                        {
+                            char c = desc[j];
+                            // Non-whitespace
+                            if (c > ' ')
+                            {
+                                // Find end of word
+                                int k = j + 1;
+                                while (k < desc.Length)
+                                {
+                                    c = desc[k];
+                                    if (c <= ' ') break;
+                                    ++k;
+                                }
+                                int len = k - j;
+                                // Is word too long for current line?
+                                if ((sb.Length + len) > descWidth)
+                                {
+                                    // Is word really long?
+                                    if (len > descWidth || len >= LONGWORD)
+                                    {
+                                        // Is the description width only 1 character?
+                                        if (descWidth == 1)
+                                        {
+                                            for (int l = j; l < k; ++l)
+                                            {
+                                                if (sb.Length >= descWidth)
+                                                {
+                                                    descLines.Add(sb.ToString());
+                                                    sb.Clear();
+                                                }
+                                                sb.Append(desc[l]);
+                                            }
+                                        }
+                                        // No!
+                                        else
+                                        {
+                                            int l = j;
+                                            if (sb.Length > 0)
+                                            {
+                                                // Should we use what's left of the current line?
+                                                int whatsLeft = descWidth - sb.Length;
+                                                if (whatsLeft > 2)
+                                                {
+                                                    l += whatsLeft - 1;
+                                                    sb.Append(desc[j..l]);
+                                                    sb.Append('-');
+                                                }
+                                                // New line
+                                                descLines.Add(sb.ToString());
+                                                sb.Clear();
+                                            }
+                                            while (l < k)
+                                            {
+                                                // Is there room for the rest of the word?
+                                                if ((k - l) <= descWidth)
+                                                {
+                                                    sb.Append(desc[l..k]);
+                                                    l = k;
+                                                }
+                                                // No!
+                                                else
+                                                {
+                                                    int m = l + descWidth - 1;
+                                                    sb.Append(desc[l..m]);
+                                                    sb.Append('-');
+                                                    // New line
+                                                    descLines.Add(sb.ToString());
+                                                    sb.Clear();
+                                                    // Next
+                                                    l = m;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    // No!
+                                    else
+                                    {
+                                        // New line
+                                        descLines.Add(sb.ToString());
+                                        sb.Clear();
+                                        // Add word to line
+                                        sb.Append(desc[j..k]);
+                                    }
+                                }
+                                // No!
+                                else
+                                {
+                                    // Add word to line
+                                    sb.Append(desc[j..k]);
+                                }
+                                // Next
+                                j = k;
+                            }
+                            // Whitespace
+                            else
+                            {
+                                while (j < desc.Length)
+                                {
+                                    c = desc[j];
+                                    // Is this non-whitespace?
+                                    if (c > ' ') break;
+                                    // Add to line
+                                    if (sb.Length < descWidth) // The end of the line absorbs excess whitespace
+                                    {
+                                        // Is this a new line?
+                                        if (c == '\n')
+                                        {
+                                            descLines.Add(sb.ToString());
+                                            sb.Clear();
+                                        }
+                                        // No!
+                                        else
+                                        {
+                                            sb.Append(c);
+                                        }
+                                    }
+                                    // Next
+                                    ++j;
+                                }
+                                if (sb.Length >= descWidth)
+                                {
+                                    descLines.Add(sb.ToString());
+                                    sb.Clear();
+                                }
+                            }
+                        }
+                        if (sb.Length > 0)
+                            descLines.Add(sb.ToString());
+                    }
+                    // Print
+                    int height = Math.Max(nameLines.Count, descLines.Count);
+                    for (j = 0; j < height; ++j)
+                    {
+                        // Name
+                        if (j < nameLines.Count)
+                            Console.Write(nameLines[j].PadRight(nameWidth));
+                        else
+                            Console.Write(noName);
+                        // Desc
+                        if (j < descLines.Count)
+                            Console.Write(descLines[j]);
+                        // End of line
+                        Console.WriteLine();
+                    }
+                    Console.WriteLine();
+                }
+                // Success!!!
                 return;
             }
             // Parse required
@@ -149,7 +384,7 @@ namespace cmdaxe
                 if (reqParam.IsArray)
                 {
                     var array = Array.CreateInstance(reqParam.ParseFunc.Type, required.Count - i);
-                    for (var j = 0; j < array.Length; ++j)
+                    for (j = 0; j < array.Length; ++j)
                     {
                         var input = required[i++];
                         var value = MM_Parse(reqParam.ParseFunc, input);
@@ -181,7 +416,7 @@ namespace cmdaxe
                 if (option.IsArray)
                 {
                     var array = Array.CreateInstance(option.ParseFunc.Type, kvp.Value.Count);
-                    for (var j = 0; j < array.Length; ++j)
+                    for (j = 0; j < array.Length; ++j)
                     {
                         var value = MM_Parse(option.ParseFunc, kvp.Value[j]);
                         array.SetValue(value, j);

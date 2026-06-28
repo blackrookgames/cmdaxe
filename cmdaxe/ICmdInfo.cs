@@ -44,13 +44,24 @@ namespace cmdaxe
         /// </exception>
         internal void MM_Run(IContext context)
         {
-            context ??= Group.Groups.Context;
-            var command = MM_Instantiate();
-            // Prepare for excecution
-            command.MM_Prepare(this, context);
-            if (command.PP_HelpRequest) return;
-            // Execute!!!
-            command.Main();
+            void run()
+            {
+                context ??= Group.Groups.Context;
+                var command = MM_Instantiate();
+                // Prepare for excecution
+                command.MM_Prepare(this, context);
+                if (command.PP_HelpRequest) return;
+                // Execute!!!
+                command.Main();
+            }
+            try
+            {
+                InternalCmdUtil.WrapCatchError(run);
+            }
+            catch (CommandException e) when (e.Cmd is null)
+            {
+                throw new CommandException(this, e.Message);
+            }
         }
 
         #endregion

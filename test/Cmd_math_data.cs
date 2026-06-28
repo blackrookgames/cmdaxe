@@ -9,7 +9,7 @@ namespace test
     {
         #region required
 
-        [Required(desc: "Numbers")]
+        [Required(name:"number", desc: "Numbers in data")]
         double[] numbers;
 
         #endregion
