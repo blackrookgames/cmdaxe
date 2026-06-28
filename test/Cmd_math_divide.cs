@@ -40,7 +40,7 @@ namespace test
             }
             set
             {
-                if (value != 0)
+                if (value == 0)
                     throw new CommandException("Cannot divide by zero");
                 f_Number1 = value;
             }
