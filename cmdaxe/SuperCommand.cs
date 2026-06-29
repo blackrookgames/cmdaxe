@@ -81,6 +81,7 @@ namespace cmdaxe
             }
         }
 
+        /// <inheritdoc/>
         public sealed override void Main()
         {
             if (f_SubGroup is null) return;

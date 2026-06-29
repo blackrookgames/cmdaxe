@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 
 namespace cmdaxe
 {
+    /// <summary>Main class for <see cref="cmdaxe"/></summary>
     public static class CmdAxe
     { 
         #region nested

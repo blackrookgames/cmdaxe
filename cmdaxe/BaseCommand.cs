@@ -3,6 +3,7 @@ using System.Reflection;
 
 namespace cmdaxe
 {
+    /// <summary>Represents a base command</summary>
     public abstract class BaseCommand
     {
         #region nested
