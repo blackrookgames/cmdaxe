@@ -22,7 +22,7 @@ namespace cmdaxe
         /// <param name="name">Group name</param>
         /// <param name="group">Found group</param>
         /// <returns>Whether or not successful</returns>
-        public bool TryGet(string name, out ICmdGroup group);
+        public bool TryGet(string? name, out ICmdGroup? group);
 
         #endregion
     }

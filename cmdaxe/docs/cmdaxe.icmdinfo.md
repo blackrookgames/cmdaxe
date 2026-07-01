@@ -8,6 +8,8 @@ Represents information about a command
 public interface ICmdInfo
 ```
 
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute)
+
 ## Properties
 
 ### **Group**
@@ -51,7 +53,7 @@ string Name { get; }
 Command description
 
 ```csharp
-string Desc { get; }
+string? Desc { get; }
 ```
 
 #### Property Value
@@ -63,7 +65,7 @@ string Desc { get; }
 Keyword for displaying help
 
 ```csharp
-string HelpKeyword { get; }
+string? HelpKeyword { get; }
 ```
 
 #### Property Value
@@ -89,12 +91,12 @@ char HelpShort { get; }
 Executes based on context input
 
 ```csharp
-virtual int Run(IContext context)
+virtual int Run(IContext? context)
 ```
 
 #### Parameters
 
-`context` [IContext](./cmdaxe.icontext.md)<br>
+`context` [IContext](./cmdaxe.icontext.md)?<br>
 Current context
 
 #### Returns
@@ -120,12 +122,12 @@ Exit code
 Creates a string of the full syntax of the command
 
 ```csharp
-virtual string GetSyntax(IContext context)
+virtual string GetSyntax(IContext? context)
 ```
 
 #### Parameters
 
-`context` [IContext](./cmdaxe.icontext.md)<br>
+`context` [IContext](./cmdaxe.icontext.md)?<br>
 Current context
 
 #### Returns
@@ -151,12 +153,12 @@ Full syntax of the command
 Checks whether or not the specified string indicates a help keyword
 
 ```csharp
-virtual bool IsHelp(string s)
+virtual bool IsHelp(string? s)
 ```
 
 #### Parameters
 
-`s` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`s` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 String to check
 
 #### Returns

@@ -8,7 +8,7 @@ namespace cmdaxe
         #region string
 
         [ParseFunc(typeof(string))]
-        internal static bool MM_TryParseString(string input, out object result)
+        internal static bool MM_TryParseString(string? input, out object? result)
         {
             result = input;
             return true;
@@ -23,7 +23,7 @@ namespace cmdaxe
         /// <param name="result">Parse result</param>
         /// <returns>Whether or not successful</returns>
         [ParseFunc(typeof(bool), displayName: "boolean")]
-        public static bool TryParseBool(string input, out object result)
+        public static bool TryParseBool(string? input, out object? result)
         {
             if (input != null)
             {
@@ -61,7 +61,7 @@ namespace cmdaxe
         /// <param name="result">Parse result</param>
         /// <returns>Whether or not successful</returns>
         [ParseFunc(typeof(float), displayName: "single-precision floating-point")]
-        public static bool TryParseSingle(string input, out object result)
+        public static bool TryParseSingle(string? input, out object? result)
         {
             result = default;
             if (!float.TryParse(input, out var raw)) return false;
@@ -77,7 +77,7 @@ namespace cmdaxe
         /// <param name="result">Parse result</param>
         /// <returns>Whether or not successful</returns>
         [ParseFunc(typeof(double), displayName: "double-precision floating-point")]
-        public static bool TryParseDouble(string input, out object result)
+        public static bool TryParseDouble(string? input, out object? result)
         {
             result = default;
             if (!double.TryParse(input, out var raw)) return false;

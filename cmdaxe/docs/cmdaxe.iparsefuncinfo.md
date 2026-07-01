@@ -8,6 +8,8 @@ Represents information about a parse function
 public interface IParseFuncInfo
 ```
 
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute)
+
 ## Properties
 
 ### **Type**
@@ -27,7 +29,7 @@ Type Type { get; }
 Display name for target type (ex: "8-bit unsigned integer")
 
 ```csharp
-string DisplayName { get; }
+string? DisplayName { get; }
 ```
 
 #### Property Value

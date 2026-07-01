@@ -80,11 +80,12 @@ namespace cmdaxe
             }
             catch (Exception e)
             {
-                while (e is not null)
+                Exception? ee = e;
+                while (ee is not null)
                 {
-                    if (e is CommandException)
-                        throw e;
-                    e = e.InnerException;
+                    if (ee is CommandException)
+                        throw ee;
+                    ee = ee.InnerException;
                 }
                 throw;
             }

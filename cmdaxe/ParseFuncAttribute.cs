@@ -18,12 +18,12 @@ namespace cmdaxe
     /// <param name="type">Target type</param>
     /// <param name="displayName">Display name for target type (ex: "8-bit unsigned integer")</param>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-    public class ParseFuncAttribute(Type type, string displayName = null) : Attribute
+    public class ParseFuncAttribute(Type type, string? displayName = null) : Attribute
     {
         #region fields
 
         private readonly Type f_Type = type;
-        private readonly string f_DisplayName = displayName;
+        private readonly string? f_DisplayName = displayName;
 
         #endregion
 
@@ -33,7 +33,7 @@ namespace cmdaxe
         public Type Type => f_Type;
 
         /// <summary>Display name for target type (ex: "8-bit unsigned integer")</summary>
-        public string DisplayName => f_DisplayName;
+        public string? DisplayName => f_DisplayName;
 
         #endregion
     }

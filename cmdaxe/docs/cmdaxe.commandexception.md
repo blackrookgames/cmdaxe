@@ -9,7 +9,8 @@ public class CommandException : System.Exception, System.Runtime.Serialization.I
 ```
 
 Inheritance [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://learn.microsoft.com/en-us/dotnet/api/system.exception) → [CommandException](./cmdaxe.commandexception.md)<br>
-Implements [ISerializable](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
+Implements [ISerializable](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)<br>
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute)
 
 **Remarks:**
 
@@ -22,7 +23,7 @@ Initializer for [CommandException](./cmdaxe.commandexception.md)
 Related command
 
 ```csharp
-public ICmdInfo Cmd { get; }
+public ICmdInfo? Cmd { get; }
 ```
 
 #### Property Value
@@ -116,15 +117,15 @@ public virtual string? StackTrace { get; }
 Thrown when an error occurs during command execution
 
 ```csharp
-public CommandException(ICmdInfo cmd, string message)
+public CommandException(ICmdInfo? cmd, string? message)
 ```
 
 #### Parameters
 
-`cmd` [ICmdInfo](./cmdaxe.icmdinfo.md)<br>
+`cmd` [ICmdInfo](./cmdaxe.icmdinfo.md)?<br>
 Related command
 
-`message` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`message` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Error message
 
 **Remarks:**
@@ -136,12 +137,12 @@ Initializer for [CommandException](./cmdaxe.commandexception.md)
 Initializer for [CommandException](./cmdaxe.commandexception.md)
 
 ```csharp
-public CommandException(string message)
+public CommandException(string? message)
 ```
 
 #### Parameters
 
-`message` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`message` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Error message
 
 ## Events

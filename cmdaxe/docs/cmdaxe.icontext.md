@@ -8,6 +8,8 @@ Represents a `cmdaxe` context
 public interface IContext
 ```
 
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute)
+
 ## Properties
 
 ### **Original**
@@ -15,7 +17,7 @@ public interface IContext
 Original context
 
 ```csharp
-IContext Original { get; }
+IContext? Original { get; }
 ```
 
 #### Property Value

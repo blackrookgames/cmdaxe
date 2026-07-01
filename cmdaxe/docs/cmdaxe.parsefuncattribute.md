@@ -15,7 +15,7 @@ public class ParseFuncAttribute : System.Attribute
 ```
 
 Inheritance [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object) → [Attribute](https://learn.microsoft.com/en-us/dotnet/api/system.attribute) → [ParseFuncAttribute](./cmdaxe.parsefuncattribute.md)<br>
-Attributes [AttributeUsageAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.attributeusageattribute)
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute), [AttributeUsageAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.attributeusageattribute)
 
 ## Properties
 
@@ -36,7 +36,7 @@ public Type Type { get; }
 Display name for target type (ex: "8-bit unsigned integer")
 
 ```csharp
-public string DisplayName { get; }
+public string? DisplayName { get; }
 ```
 
 #### Property Value
@@ -66,7 +66,7 @@ In order for the method to be considered a parse function, it must
 -
 
 ```csharp
-public ParseFuncAttribute(Type type, string displayName = null)
+public ParseFuncAttribute(Type type, string? displayName = null)
 ```
 
 #### Parameters
@@ -74,5 +74,5 @@ public ParseFuncAttribute(Type type, string displayName = null)
 `type` [Type](https://learn.microsoft.com/en-us/dotnet/api/system.type)<br>
 Target type
 
-`displayName` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`displayName` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Display name for target type (ex: "8-bit unsigned integer")

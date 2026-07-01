@@ -31,12 +31,12 @@ int Count { get; }
 Attempts to find the parse function with the specified target type
 
 ```csharp
-bool TryGet(Type type, out IParseFuncInfo func)
+bool TryGet(Type? type, out IParseFuncInfo func)
 ```
 
 #### Parameters
 
-`type` [Type](https://learn.microsoft.com/en-us/dotnet/api/system.type)<br>
+`type` [Type](https://learn.microsoft.com/en-us/dotnet/api/system.type)?<br>
 Target type
 
 `out` `func` [IParseFuncInfo](./cmdaxe.iparsefuncinfo.md)<br>

@@ -9,8 +9,8 @@ namespace cmdaxe
     {
         #region fields
 
-        private IContext f_Context = null;
-        private ICmdGroup f_SubGroup = null;
+        private IContext? f_Context = null;
+        private ICmdGroup? f_SubGroup = null;
         private bool f_HelpRequest = false;
 
         #endregion
@@ -18,7 +18,7 @@ namespace cmdaxe
         #region abstract properties
 
         /// <summary>Name of group containing subcommands</summary>
-        protected abstract string PP_SubGroupName { get; }
+        protected abstract string? PP_SubGroupName { get; }
 
         #endregion
 

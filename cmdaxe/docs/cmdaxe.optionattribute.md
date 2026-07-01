@@ -30,7 +30,7 @@ public char Shortcut { get; }
 Parameter name
 
 ```csharp
-public string Name { get; }
+public string? Name { get; }
 ```
 
 #### Property Value
@@ -42,7 +42,7 @@ public string Name { get; }
 Parameter description
 
 ```csharp
-public string Desc { get; }
+public string? Desc { get; }
 ```
 
 #### Property Value
@@ -66,16 +66,16 @@ public virtual object TypeId { get; }
 Specifies an optional command-line parameter
 
 ```csharp
-protected OptionAttribute(string name, char shortcut, string desc)
+protected OptionAttribute(string? name, char shortcut, string? desc)
 ```
 
 #### Parameters
 
-`name` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`name` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Parameter name; this is also its keyword
 
 `shortcut` [Char](https://learn.microsoft.com/en-us/dotnet/api/system.char)<br>
 Shortcut character
 
-`desc` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`desc` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Parameter description

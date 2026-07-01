@@ -8,7 +8,8 @@ Main class for `cmdaxe`
 public static class CmdAxe
 ```
 
-Inheritance [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object) → [CmdAxe](./cmdaxe.cmdaxe.md)
+Inheritance [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object) → [CmdAxe](./cmdaxe.cmdaxe.md)<br>
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute)
 
 ## Methods
 
@@ -17,18 +18,18 @@ Inheritance [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)
 Creates a `cmdaxe` context
 
 ```csharp
-public static IContext CreateContext(IEnumerable<string> input, Assembly assembly = null, string entryName = null)
+public static IContext CreateContext(IEnumerable<string>? input, Assembly? assembly = null, string? entryName = null)
 ```
 
 #### Parameters
 
-`input` [IEnumerable&lt;String&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
+`input` [IEnumerable&lt;String&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)?<br>
 User input
 
-`assembly` [Assembly](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assembly)<br>
+`assembly` [Assembly](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assembly)?<br>
 Entry assembly
 
-`entryName` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`entryName` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Entry name
 
 #### Returns
@@ -51,21 +52,21 @@ Created context
 Main method
 
 ```csharp
-public static int Run(IEnumerable<string> input, Assembly assembly = null, string entryName = null, string group = null)
+public static int Run(IEnumerable<string>? input, Assembly? assembly = null, string? entryName = null, string? group = null)
 ```
 
 #### Parameters
 
-`input` [IEnumerable&lt;String&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
+`input` [IEnumerable&lt;String&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)?<br>
 User input
 
-`assembly` [Assembly](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assembly)<br>
+`assembly` [Assembly](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assembly)?<br>
 Entry assembly
 
-`entryName` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`entryName` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Entry name
 
-`group` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`group` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Group of valid commands
 
 #### Returns

@@ -13,13 +13,13 @@ namespace cmdaxe
     { 
         #region nested
 
-        private readonly struct StrOrNull(string value) : IEquatable<StrOrNull>, IComparable<StrOrNull>
+        private readonly struct StrOrNull(string? value) : IEquatable<StrOrNull>, IComparable<StrOrNull>
         {
             #region object
 
-            public override string ToString() => f_Value;
+            public override string ToString() => (f_Value is null) ? "" : f_Value;
 
-            public override bool Equals(object obj)
+            public override bool Equals(object? obj)
             {
                 if (obj is null) return false;
                 if (obj is not StrOrNull other) return false;
@@ -58,14 +58,14 @@ namespace cmdaxe
 
             #region fields
 
-            private readonly string f_Value = value;
+            private readonly string? f_Value = value;
 
             #endregion
 
             #region properties
 
             /// <summary>String value</summary>
-            public string Value => f_Value;
+            public string? Value => f_Value;
 
             #endregion
         }
@@ -89,7 +89,7 @@ namespace cmdaxe
                 f_Func = func;
             }
 
-            public static bool TryParse(MethodInfo method, out ParseFuncInfo result)
+            public static bool TryParse(MethodInfo? method, out ParseFuncInfo? result)
             {
                 result = null;
                 if (method is null) return false;
@@ -113,7 +113,7 @@ namespace cmdaxe
 
             #region fields
 
-            private readonly string f_DisplayName;
+            private readonly string? f_DisplayName;
             private readonly Type f_Type;
             private readonly ParseFunc f_Func;
 
@@ -125,7 +125,7 @@ namespace cmdaxe
             public Type Type => f_Type;
 
             /// <inheritdoc/>
-            public string DisplayName => f_DisplayName;
+            public string? DisplayName => f_DisplayName;
 
             /// <inheritdoc/>
             public ParseFunc Func => f_Func;
@@ -160,7 +160,7 @@ namespace cmdaxe
             public IEnumerator<IParseFuncInfo> GetEnumerator() => f_Items.Values.GetEnumerator();
 
             /// <inheritdoc/>
-            public bool TryGet(Type type, out IParseFuncInfo func)
+            public bool TryGet(Type? type, out IParseFuncInfo? func)
             {
                 func = null;
                 if (type is null)
@@ -194,7 +194,7 @@ namespace cmdaxe
                 f_Constructor = constructor;
             }
 
-            public static bool TryParse(Type type, out CmdInfoArgs result)
+            public static bool TryParse(Type? type, out CmdInfoArgs? result)
             {
                 const BindingFlags FLAGS = 
                     BindingFlags.Instance | 
@@ -266,8 +266,8 @@ namespace cmdaxe
             private readonly CmdGroup f_Group;
             private readonly Type f_Type;
             private readonly string f_Name;
-            private readonly string f_Desc;
-            private readonly string f_HelpKeyword;
+            private readonly string? f_Desc;
+            private readonly string? f_HelpKeyword;
             private readonly char f_HelpShort;
             private readonly ConstructorInfo f_Constructor;
 
@@ -285,10 +285,10 @@ namespace cmdaxe
             public string Name => f_Name;
 
             /// <inheritdoc/>
-            public string Desc => f_Desc;
+            public string? Desc => f_Desc;
             
             /// <inheritdoc/>
-            public string HelpKeyword => f_HelpKeyword;
+            public string? HelpKeyword => f_HelpKeyword;
 
             /// <inheritdoc/>
             public char HelpShort => f_HelpShort;
@@ -310,12 +310,12 @@ namespace cmdaxe
         /// Assume
         /// <br/>-<paramref name="groups"/> is not null
         /// </summary>
-        private class CmdGroup(ICmdGroups groups, string name) : ICmdGroup
+        private class CmdGroup(ICmdGroups groups, string? name) : ICmdGroup
         {
             #region fields
 
             private readonly ICmdGroups f_Groups = groups;
-            private readonly string f_Name = name;
+            private readonly string? f_Name = name;
             private readonly Dictionary<string, ICmdInfo> f_Items = [];
 
             #endregion
@@ -326,7 +326,7 @@ namespace cmdaxe
             public ICmdGroups Groups => f_Groups;
 
             /// <inheritdoc/>
-            public string Name => f_Name;
+            public string? Name => f_Name;
 
             /// <inheritdoc/>
             public int Count => f_Items.Count;
@@ -345,7 +345,7 @@ namespace cmdaxe
             public IEnumerator<ICmdInfo> GetEnumerator() => f_Items.Values.GetEnumerator();
 
             /// <inheritdoc/>
-            public bool TryGet(string name, out ICmdInfo command)
+            public bool TryGet(string? name, out ICmdInfo? command)
             {
                 if (name is null) { command = null; return false; }
                 return f_Items.TryGetValue(name, out command);
@@ -389,7 +389,7 @@ namespace cmdaxe
             public IEnumerator<ICmdGroup> GetEnumerator() => f_Items.Values.GetEnumerator();
 
             /// <inheritdoc/>
-            public bool TryGet(string name, out ICmdGroup command)
+            public bool TryGet(string? name, out ICmdGroup? command)
             {
                 if (f_Items.TryGetValue(new(name), out var raw))
                 {
@@ -424,7 +424,7 @@ namespace cmdaxe
             #region IContext
             
             /// <inheritdoc/>
-            public IContext Original => null;
+            public IContext? Original => null;
 
             /// <inheritdoc/>
             public string EntryName => f_EntryName;
@@ -486,18 +486,26 @@ namespace cmdaxe
             try
             {
                 var currentDir = Path.GetFullPath(Directory.GetCurrentDirectory());
-                return Path.GetRelativePath(currentDir, Path.GetFullPath(Environment.ProcessPath));
+                if (currentDir is null) goto alt;
+                var processPath = Environment.ProcessPath;
+                if (processPath is null) goto alt;
+                return Path.GetRelativePath(currentDir, Path.GetFullPath(processPath));
             }
-            catch { return assembly.GetName().Name; }
+            catch { }
+        alt:
+            var assName = assembly.GetName();
+            if (assName is null) return "";
+            var assNameName = assName.Name;
+            return (assNameName is null) ? "" : assNameName;
         }
 
         /// <summary>
         ///     Assume
         ///     <br/>- <paramref name="context"/> is not null
         /// </summary>
-        private static ICmdGroup MM_GetGroup(IContext context, string group)
+        private static ICmdGroup MM_GetGroup(IContext context, string? group)
         {
-            if (context.CommandGroups.TryGet(group, out var cmdGroup)) return cmdGroup;
+            if (context.CommandGroups.TryGet(group, out var cmdGroup)) return cmdGroup!;
             throw new KeyNotFoundException("Could not find a group of the specified name.");
         }
 
@@ -519,8 +527,8 @@ namespace cmdaxe
         ///     <br/>or<br/>
         ///     Two or more parse functions have the same target type
         /// </exception>
-        public static IContext CreateContext(IEnumerable<string> input, 
-            Assembly assembly = null, string entryName = null)
+        public static IContext CreateContext(IEnumerable<string>? input, 
+            Assembly? assembly = null, string? entryName = null)
         {
             const BindingFlags METHOD_FLAGS = 
                 BindingFlags.Static | 
@@ -542,7 +550,7 @@ namespace cmdaxe
                 if (CmdInfoArgs.TryParse(type, out var args))
                 {
                     // Find/create group
-                    var groupName = new StrOrNull(args.Attr.Group);
+                    var groupName = new StrOrNull(args!.Attr.Group);
                     if (!context.CommandGroups.Items.TryGetValue(groupName, out var group))
                     {
                         group = new CmdGroup(context.CommandGroups, args.Attr.Group);
@@ -562,7 +570,7 @@ namespace cmdaxe
                     if (!ParseFuncInfo.TryParse(method, out var func))
                         continue;
                     // Make sure the target type does not already exists in collection
-                    if (context.ParseFuncs.Items.ContainsKey(func.Type))
+                    if (context.ParseFuncs.Items.ContainsKey(func!.Type))
                         throw new CmdAxeException("Two or more parse functions have the same target type.");
                     // Add function
                     context.ParseFuncs.Items.Add(func.Type, func);
@@ -575,7 +583,7 @@ namespace cmdaxe
                 if (!ParseFuncInfo.TryParse(method, out var func))
                     continue;
                 // Skip if user has already defined a function for the target type
-                if (context.ParseFuncs.Items.ContainsKey(func.Type))
+                if (context.ParseFuncs.Items.ContainsKey(func!.Type))
                     continue;
                 // Add function
                 context.ParseFuncs.Items.Add(func.Type, func);
@@ -599,8 +607,8 @@ namespace cmdaxe
         /// <exception cref="KeyNotFoundException">
         ///     Could not find a group of the specified name
         /// </exception>
-        public static int Run(IEnumerable<string> input, 
-            Assembly assembly = null, string entryName = null, string group = null)
+        public static int Run(IEnumerable<string>? input, 
+            Assembly? assembly = null, string? entryName = null, string? group = null)
         {
             var context = CreateContext(input, assembly, entryName);
             return MM_GetGroup(context, group).Run();

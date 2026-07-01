@@ -26,12 +26,12 @@ namespace cmdaxe
     ///     Parameter description
     /// </param>
     public class OptionWArgAttribute(
-        string name = null, char shortcut = '\0', string argType = null, string desc = null) : 
+        string? name = null, char shortcut = '\0', string? argType = null, string? desc = null) : 
         OptionAttribute(name, shortcut, desc)
     {
         #region fields
 
-        private readonly string f_ArgType = argType;
+        private readonly string? f_ArgType = argType;
 
         #endregion
 
@@ -41,7 +41,7 @@ namespace cmdaxe
         ///     Argument display type; this tells the user what kind of argument should be inputted<br/>
         ///     Examples: "number", "name", "path", "directory"
         /// </summary>
-        public string ArgType => f_ArgType;
+        public string? ArgType => f_ArgType;
 
         #endregion
     }

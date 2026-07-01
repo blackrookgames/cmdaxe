@@ -9,7 +9,7 @@ public abstract class ParameterAttribute : System.Attribute
 ```
 
 Inheritance [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object) → [Attribute](https://learn.microsoft.com/en-us/dotnet/api/system.attribute) → [ParameterAttribute](./cmdaxe.parameterattribute.md)<br>
-Attributes [AttributeUsageAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.attributeusageattribute)
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute), [AttributeUsageAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.attributeusageattribute)
 
 ## Properties
 
@@ -18,7 +18,7 @@ Attributes [AttributeUsageAttribute](https://learn.microsoft.com/en-us/dotnet/ap
 Parameter name
 
 ```csharp
-public string Name { get; }
+public string? Name { get; }
 ```
 
 #### Property Value
@@ -30,7 +30,7 @@ public string Name { get; }
 Parameter description
 
 ```csharp
-public string Desc { get; }
+public string? Desc { get; }
 ```
 
 #### Property Value
@@ -54,13 +54,13 @@ public virtual object TypeId { get; }
 Specifies a command-line parameter
 
 ```csharp
-protected ParameterAttribute(string name, string desc)
+protected ParameterAttribute(string? name, string? desc)
 ```
 
 #### Parameters
 
-`name` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`name` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Parameter name
 
-`desc` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`desc` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Parameter description

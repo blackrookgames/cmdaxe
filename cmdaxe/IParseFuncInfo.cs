@@ -11,7 +11,7 @@ namespace cmdaxe
         public Type Type { get; }
 
         /// <summary>Display name for target type (ex: "8-bit unsigned integer")</summary>
-        public string DisplayName { get; }
+        public string? DisplayName { get; }
         
         /// <summary>Parse function</summary>
         public ParseFunc Func { get; }

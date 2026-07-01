@@ -9,7 +9,7 @@ namespace cmdaxe
         /// <param name="result">Parse result</param>
         /// <returns>Whether or not successful</returns>
         [ParseFunc(typeof(byte), displayName: "8-bit unsigned integer")]
-        public static bool TryParseUInt8(string s, out object result)
+        public static bool TryParseUInt8(string? s, out object? result)
         {
             const int hexDigits = 2;
             byte rawResult;
@@ -53,7 +53,7 @@ namespace cmdaxe
         /// <param name="result">Parse result</param>
         /// <returns>Whether or not successful</returns>
         [ParseFunc(typeof(sbyte), displayName: "8-bit signed integer")]
-        public static bool TryParseInt8(string s, out object result)
+        public static bool TryParseInt8(string? s, out object? result)
         {
             const int hexDigits = 2;
             sbyte rawResult;
@@ -97,7 +97,7 @@ namespace cmdaxe
         /// <param name="result">Parse result</param>
         /// <returns>Whether or not successful</returns>
         [ParseFunc(typeof(ushort), displayName: "16-bit unsigned integer")]
-        public static bool TryParseUInt16(string s, out object result)
+        public static bool TryParseUInt16(string? s, out object? result)
         {
             const int hexDigits = 4;
             ushort rawResult;
@@ -141,7 +141,7 @@ namespace cmdaxe
         /// <param name="result">Parse result</param>
         /// <returns>Whether or not successful</returns>
         [ParseFunc(typeof(short), displayName: "16-bit signed integer")]
-        public static bool TryParseInt16(string s, out object result)
+        public static bool TryParseInt16(string? s, out object? result)
         {
             const int hexDigits = 4;
             short rawResult;
@@ -185,7 +185,7 @@ namespace cmdaxe
         /// <param name="result">Parse result</param>
         /// <returns>Whether or not successful</returns>
         [ParseFunc(typeof(uint), displayName: "32-bit unsigned integer")]
-        public static bool TryParseUInt32(string s, out object result)
+        public static bool TryParseUInt32(string? s, out object? result)
         {
             const int hexDigits = 8;
             uint rawResult;
@@ -229,7 +229,7 @@ namespace cmdaxe
         /// <param name="result">Parse result</param>
         /// <returns>Whether or not successful</returns>
         [ParseFunc(typeof(int), displayName: "32-bit signed integer")]
-        public static bool TryParseInt32(string s, out object result)
+        public static bool TryParseInt32(string? s, out object? result)
         {
             const int hexDigits = 8;
             int rawResult;
@@ -273,7 +273,7 @@ namespace cmdaxe
         /// <param name="result">Parse result</param>
         /// <returns>Whether or not successful</returns>
         [ParseFunc(typeof(ulong), displayName: "64-bit unsigned integer")]
-        public static bool TryParseUInt64(string s, out object result)
+        public static bool TryParseUInt64(string? s, out object? result)
         {
             const int hexDigits = 16;
             ulong rawResult;
@@ -317,7 +317,7 @@ namespace cmdaxe
         /// <param name="result">Parse result</param>
         /// <returns>Whether or not successful</returns>
         [ParseFunc(typeof(long), displayName: "64-bit signed integer")]
-        public static bool TryParseInt64(string s, out object result)
+        public static bool TryParseInt64(string? s, out object? result)
         {
             const int hexDigits = 16;
             long rawResult;

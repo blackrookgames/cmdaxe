@@ -9,7 +9,8 @@ public class CmdAxeException : System.Exception, System.Runtime.Serialization.IS
 ```
 
 Inheritance [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://learn.microsoft.com/en-us/dotnet/api/system.exception) → [CmdAxeException](./cmdaxe.cmdaxeexception.md)<br>
-Implements [ISerializable](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)
+Implements [ISerializable](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)<br>
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute)
 
 ## Properties
 
@@ -100,12 +101,12 @@ public virtual string? StackTrace { get; }
 Initializer for [CmdAxeException](./cmdaxe.cmdaxeexception.md)
 
 ```csharp
-public CmdAxeException(string message)
+public CmdAxeException(string? message)
 ```
 
 #### Parameters
 
-`message` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`message` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Error message
 
 ### **CmdAxeException(String, Exception)**
@@ -113,15 +114,15 @@ Error message
 Initializer for [CmdAxeException](./cmdaxe.cmdaxeexception.md)
 
 ```csharp
-public CmdAxeException(string message, Exception inner)
+public CmdAxeException(string? message, Exception? inner)
 ```
 
 #### Parameters
 
-`message` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`message` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Error message
 
-`inner` [Exception](https://learn.microsoft.com/en-us/dotnet/api/system.exception)<br>
+`inner` [Exception](https://learn.microsoft.com/en-us/dotnet/api/system.exception)?<br>
 Inner excpetion
 
 ## Events

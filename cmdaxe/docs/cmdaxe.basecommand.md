@@ -8,7 +8,8 @@ Represents a base command
 public abstract class BaseCommand
 ```
 
-Inheritance [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object) → [BaseCommand](./cmdaxe.basecommand.md)
+Inheritance [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object) → [BaseCommand](./cmdaxe.basecommand.md)<br>
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute)
 
 ## Properties
 
@@ -37,7 +38,7 @@ protected BaseCommand()
 Gets the input syntax of the command
 
 ```csharp
-protected static string MM__GetSyntax(IContext context, Type type)
+protected static string? MM__GetSyntax(IContext context, Type type)
 ```
 
 #### Parameters
@@ -50,7 +51,7 @@ Command type
 
 #### Returns
 
-[String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+[String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Command input syntax
 
 #### Exceptions

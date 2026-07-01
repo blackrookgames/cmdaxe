@@ -8,6 +8,8 @@ Represents a command-line parameter that takes an argument
 public interface IParameterWArg
 ```
 
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute)
+
 ## Properties
 
 ### **IsArray**

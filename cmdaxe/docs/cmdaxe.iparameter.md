@@ -8,6 +8,8 @@ Represents a command-line parameter
 public interface IParameter
 ```
 
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute)
+
 ## Properties
 
 ### **Name**
@@ -27,7 +29,7 @@ string Name { get; }
 Parameter description
 
 ```csharp
-string Desc { get; }
+string? Desc { get; }
 ```
 
 #### Property Value
@@ -41,7 +43,7 @@ string Desc { get; }
 Sets the value of the underlying field or property
 
 ```csharp
-void SetValue(object instance, object value)
+void SetValue(object instance, object? value)
 ```
 
 #### Parameters
@@ -49,7 +51,7 @@ void SetValue(object instance, object value)
 `instance` [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
 Instance that contains the underlying field or property
 
-`value` [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)<br>
+`value` [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)?<br>
 Value
 
 #### Exceptions

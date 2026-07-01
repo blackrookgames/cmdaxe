@@ -18,7 +18,7 @@ Argument display type; this tells the user what kind of argument should be input
  Examples: "number", "name", "path", "directory"
 
 ```csharp
-string ArgType { get; }
+string? ArgType { get; }
 ```
 
 #### Property Value

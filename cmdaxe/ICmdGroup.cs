@@ -12,7 +12,7 @@ namespace cmdaxe
         public ICmdGroups Groups { get; }
 
         /// <summary>Group name</summary>
-        public string Name { get; }
+        public string? Name { get; }
 
         /// <summary>Number of commands in group</summary>
         public int Count { get; }
@@ -25,7 +25,7 @@ namespace cmdaxe
         /// <param name="name">Command name</param>
         /// <param name="command">Found command</param>
         /// <returns>Whether or not successful</returns>
-        public bool TryGet(string name, out ICmdInfo command);
+        public bool TryGet(string? name, out ICmdInfo? command);
 
         #endregion
 
@@ -41,7 +41,7 @@ namespace cmdaxe
         /// <exception cref="CommandException">
         ///     An error occurred while executing
         /// </exception>
-        internal void MM_Run(IContext context, bool noHelp)
+        internal void MM_Run(IContext? context, bool noHelp)
         {
             context ??= Groups.Context;
             // Has the user asked for help?
@@ -68,7 +68,7 @@ namespace cmdaxe
                 (context.Original is null) ? context : context.Original,
                 context.Prefixes,
                 context.RawInput[1..]);
-            command.MM_Run(newContext);
+            command!.MM_Run(newContext);
         }
 
         #endregion
@@ -78,7 +78,7 @@ namespace cmdaxe
         /// <summary>Executes a command based on context input</summary>
         /// <param name="context">Current context</param>
         /// <returns>Exit code</returns>
-        public int Run(IContext context) => InternalCmdUtil.Wrap(() => MM_Run(context, false));
+        public int Run(IContext? context) => InternalCmdUtil.Wrap(() => MM_Run(context, false));
 
         /// <summary>Executes a command based on context input</summary>
         /// <returns>Exit code</returns>

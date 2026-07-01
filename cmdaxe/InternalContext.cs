@@ -42,7 +42,7 @@ namespace cmdaxe
         #region properties
 
         /// <inheritdoc/>
-        public IContext Original => f_Original;
+        public IContext? Original => f_Original;
 
         /// <inheritdoc/>
         public string EntryName => f_EntryName;

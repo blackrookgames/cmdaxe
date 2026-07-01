@@ -20,7 +20,7 @@ namespace cmdaxe
         /// <param name="shortcut">Parameter shortcut</param>
         /// <param name="func">Found parameter</param>
         /// <returns>Whether or not successful</returns>
-        public bool TryGet(char shortcut, out IOption func);
+        public bool TryGet(char shortcut, out IOption? func);
 
         #endregion
     }

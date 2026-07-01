@@ -17,7 +17,7 @@ namespace cmdaxe
     /// <param name="name">Parameter name</param>
     /// <param name="desc">Parameter description</param>
     public class RequiredAttribute(
-        string name = null, string desc = null) : 
+        string? name = null, string? desc = null) : 
         ParameterAttribute(name, desc)
     { }
 }

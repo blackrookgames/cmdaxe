@@ -13,18 +13,18 @@ namespace cmdaxe
     /// <param name="helpShort">Shortcut for displaying help</param>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class CommandAttribute(
-        string name = null, 
-        string group = null,
-        string desc = null,
-        string helpKeyword = "help",
+        string? name = null, 
+        string? group = null,
+        string? desc = null,
+        string? helpKeyword = "help",
         char helpShort = 'h') : Attribute
     {
         #region fields
 
-        private readonly string f_Name = name;
-        private readonly string f_Group = group;
-        private readonly string f_Desc = desc;
-        private readonly string f_HelpKeyword = helpKeyword;
+        private readonly string? f_Name = name;
+        private readonly string? f_Group = group;
+        private readonly string? f_Desc = desc;
+        private readonly string? f_HelpKeyword = helpKeyword;
         private readonly char f_HelpShort = helpShort;
 
         #endregion
@@ -32,16 +32,16 @@ namespace cmdaxe
         #region properties
 
         /// <summary>Command name</summary>
-        public string Name => f_Name;
+        public string? Name => f_Name;
 
         /// <summary>Group command belongs to</summary>
-        public string Group => f_Group;
+        public string? Group => f_Group;
 
         /// <summary>Command description</summary>
-        public string Desc => f_Desc;
+        public string? Desc => f_Desc;
         
         /// <summary>Keyword for displaying help</summary>
-        public string HelpKeyword => f_HelpKeyword;
+        public string? HelpKeyword => f_HelpKeyword;
 
         /// <summary>Shortcut for displaying help</summary>
         public char HelpShort => f_HelpShort;

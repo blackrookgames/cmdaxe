@@ -20,7 +20,7 @@ namespace cmdaxe
         /// <param name="name">Parameter name</param>
         /// <param name="func">Found parameter</param>
         /// <returns>Whether or not successful</returns>
-        public bool TryGet(string name, out T func);
+        public bool TryGet(string? name, out T? func);
 
         #endregion
     }

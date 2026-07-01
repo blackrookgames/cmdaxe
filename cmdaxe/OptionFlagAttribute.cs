@@ -11,7 +11,7 @@ namespace cmdaxe
     /// <param name="shortcut">Shortcut character</param>
     /// <param name="desc">Parameter description</param>
     public class OptionFlagAttribute(
-        string name = null, char shortcut = '\0', string desc = null) : 
+        string? name = null, char shortcut = '\0', string? desc = null) : 
         OptionAttribute(name, shortcut, desc)
     { }
 }

@@ -35,12 +35,12 @@ int Count { get; }
 Attempts to find the parameter with the specified name
 
 ```csharp
-bool TryGet(string name, out T func)
+bool TryGet(string? name, out T func)
 ```
 
 #### Parameters
 
-`name` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`name` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Parameter name
 
 `out` `func` T<br>

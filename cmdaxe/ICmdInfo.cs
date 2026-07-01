@@ -17,10 +17,10 @@ namespace cmdaxe
         public string Name { get; }
 
         /// <summary>Command description</summary>
-        public string Desc { get; }
+        public string? Desc { get; }
         
         /// <summary>Keyword for displaying help</summary>
-        public string HelpKeyword { get; }
+        public string? HelpKeyword { get; }
 
         /// <summary>Shortcut for displaying help</summary>
         public char HelpShort { get; }
@@ -42,7 +42,7 @@ namespace cmdaxe
         /// <exception cref="CommandException">
         ///     An error occurred while executing
         /// </exception>
-        internal void MM_Run(IContext context)
+        internal void MM_Run(IContext? context)
         {
             void run()
             {
@@ -71,7 +71,7 @@ namespace cmdaxe
         /// <summary>Executes based on context input</summary>
         /// <param name="context">Current context</param>
         /// <returns>Exit code</returns>
-        public int Run(IContext context) => InternalCmdUtil.Wrap(() => MM_Run(context));
+        public int Run(IContext? context) => InternalCmdUtil.Wrap(() => MM_Run(context));
 
         /// <summary>Executes based on context input</summary>
         /// <returns>Exit code</returns>
@@ -80,7 +80,7 @@ namespace cmdaxe
         /// <summary>Creates a string of the full syntax of the command</summary>
         /// <param name="context">Current context</param>
         /// <returns>Full syntax of the command</returns>
-        public string GetSyntax(IContext context)
+        public string GetSyntax(IContext? context)
         {
             context ??= Group.Groups.Context;
             return $"{context.EntryName} {context.MM_GetPrefix()}{Name} {BaseCommand.MM_GetSyntax(context, Type)}";
@@ -93,7 +93,7 @@ namespace cmdaxe
         /// <summary>Checks whether or not the specified string indicates a help keyword</summary>
         /// <param name="s">String to check</param>
         /// <returns>Whether or not <paramref name="s"/> indicates a help keyword</returns>
-        public bool IsHelp(string s)
+        public bool IsHelp(string? s)
         {
             if (HelpKeyword is not null && HelpKeyword.Length > 0 && s == $"--{HelpKeyword}")
                 return true;

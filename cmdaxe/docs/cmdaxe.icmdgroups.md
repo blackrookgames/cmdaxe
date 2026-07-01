@@ -8,7 +8,8 @@ Represents a collection of command groups
 public interface ICmdGroups : System.Collections.Generic.IEnumerable`1[[cmdaxe.ICmdGroup, cmdaxe, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Collections.IEnumerable
 ```
 
-Implements [IEnumerable&lt;ICmdGroup&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1), [IEnumerable](https://learn.microsoft.com/en-us/dotnet/api/system.collections.ienumerable)
+Implements [IEnumerable&lt;ICmdGroup&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1), [IEnumerable](https://learn.microsoft.com/en-us/dotnet/api/system.collections.ienumerable)<br>
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute)
 
 ## Properties
 
@@ -43,12 +44,12 @@ int Count { get; }
 Attempts to find the group with the specified name
 
 ```csharp
-bool TryGet(string name, out ICmdGroup group)
+bool TryGet(string? name, out ICmdGroup group)
 ```
 
 #### Parameters
 
-`name` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`name` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Group name
 
 `out` `group` [ICmdGroup](./cmdaxe.icmdgroup.md)<br>

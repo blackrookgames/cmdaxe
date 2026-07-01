@@ -8,7 +8,8 @@ Represents a super command
 public abstract class SuperCommand : BaseCommand
 ```
 
-Inheritance [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object) → [BaseCommand](./cmdaxe.basecommand.md) → [SuperCommand](./cmdaxe.supercommand.md)
+Inheritance [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object) → [BaseCommand](./cmdaxe.basecommand.md) → [SuperCommand](./cmdaxe.supercommand.md)<br>
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute)
 
 ## Properties
 
@@ -17,7 +18,7 @@ Inheritance [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object)
 Name of group containing subcommands
 
 ```csharp
-protected abstract string PP_SubGroupName { get; }
+protected abstract string? PP_SubGroupName { get; }
 ```
 
 #### Property Value

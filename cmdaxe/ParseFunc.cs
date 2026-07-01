@@ -6,5 +6,5 @@ namespace cmdaxe
     /// <param name="input">String input</param>
     /// <param name="result">Parse result</param>
     /// <returns>Whether or not successful</returns>
-    public delegate bool ParseFunc(string input, out object result);
+    public delegate bool ParseFunc(string? input, out object? result);
 }

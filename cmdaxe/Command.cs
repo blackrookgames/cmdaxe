@@ -75,7 +75,7 @@ namespace cmdaxe
                 // Is this an option?
                 if (lookForOptions && input.Length >= 2 && input[0] == '-')
                 {
-                    IOption option = null;
+                    IOption? option = null;
                     // Is this a shortcut?
                     if (input.Length == 2)
                     {
@@ -131,7 +131,7 @@ namespace cmdaxe
             foreach (var flag in optionFlags)
             {
                 allParams.Optional.TryGet(flag, out var flagInfo);
-                if (((IOptionFlag)flagInfo).IsHelp) f_HelpRequest = true;
+                if (((IOptionFlag)flagInfo!).IsHelp) f_HelpRequest = true;
             }
             if (f_HelpRequest)
             {
@@ -407,12 +407,12 @@ namespace cmdaxe
             foreach (var flag in optionFlags)
             {
                 allParams.Optional.TryGet(flag, out var flagInfo);
-                flagInfo.SetValue(this, true);
+                flagInfo!.SetValue(this, true);
             }
             foreach (var kvp in optionWArgs)
             {
                 allParams.Optional.TryGet(kvp.Key, out var rawOption);
-                IOptionWArg option = (IOptionWArg)rawOption;
+                IOptionWArg option = (IOptionWArg)rawOption!;
                 if (option.IsArray)
                 {
                     var array = Array.CreateInstance(option.ParseFunc.Type, kvp.Value.Count);
@@ -440,7 +440,7 @@ namespace cmdaxe
         ///     Assume
         ///     <br/>- <paramref name="func"/> is not null
         /// </summary>
-        private static object MM_Parse(IParseFuncInfo func, string input)
+        private static object? MM_Parse(IParseFuncInfo func, string input)
         {
             if (func.Func(input, out var result)) return result;
             throw new CommandException($"\"{input}\" is not a valid {func.DisplayName} value.");

@@ -8,7 +8,8 @@ Represents a command group
 public interface ICmdGroup : System.Collections.Generic.IEnumerable`1[[cmdaxe.ICmdInfo, cmdaxe, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Collections.IEnumerable
 ```
 
-Implements [IEnumerable&lt;ICmdInfo&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1), [IEnumerable](https://learn.microsoft.com/en-us/dotnet/api/system.collections.ienumerable)
+Implements [IEnumerable&lt;ICmdInfo&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1), [IEnumerable](https://learn.microsoft.com/en-us/dotnet/api/system.collections.ienumerable)<br>
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute)
 
 ## Properties
 
@@ -29,7 +30,7 @@ ICmdGroups Groups { get; }
 Group name
 
 ```csharp
-string Name { get; }
+string? Name { get; }
 ```
 
 #### Property Value
@@ -55,12 +56,12 @@ int Count { get; }
 Attempts to find the command with the specified name
 
 ```csharp
-bool TryGet(string name, out ICmdInfo command)
+bool TryGet(string? name, out ICmdInfo command)
 ```
 
 #### Parameters
 
-`name` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`name` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Command name
 
 `out` `command` [ICmdInfo](./cmdaxe.icmdinfo.md)<br>
@@ -76,12 +77,12 @@ Whether or not successful
 Executes a command based on context input
 
 ```csharp
-virtual int Run(IContext context)
+virtual int Run(IContext? context)
 ```
 
 #### Parameters
 
-`context` [IContext](./cmdaxe.icontext.md)<br>
+`context` [IContext](./cmdaxe.icontext.md)?<br>
 Current context
 
 #### Returns

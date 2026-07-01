@@ -9,7 +9,7 @@ namespace cmdaxe
         #region abstract properties
 
         /// <summary>Original context</summary>
-        public IContext Original { get; }
+        public IContext? Original { get; }
 
         /// <summary>Name of the entry assembly</summary>
         public string EntryName { get; }

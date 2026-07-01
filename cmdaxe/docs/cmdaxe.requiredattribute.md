@@ -23,7 +23,7 @@ Attributes [AttributeUsageAttribute](https://learn.microsoft.com/en-us/dotnet/ap
 Parameter name
 
 ```csharp
-public string Name { get; }
+public string? Name { get; }
 ```
 
 #### Property Value
@@ -35,7 +35,7 @@ public string Name { get; }
 Parameter description
 
 ```csharp
-public string Desc { get; }
+public string? Desc { get; }
 ```
 
 #### Property Value
@@ -64,13 +64,13 @@ Arrays are also supported as an underlying field/property,
  but only one is supported per command and it will always be parsed last.
 
 ```csharp
-public RequiredAttribute(string name = null, string desc = null)
+public RequiredAttribute(string? name = null, string? desc = null)
 ```
 
 #### Parameters
 
-`name` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`name` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Parameter name
 
-`desc` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`desc` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Parameter description

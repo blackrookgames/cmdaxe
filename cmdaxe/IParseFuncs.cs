@@ -19,7 +19,7 @@ namespace cmdaxe
         /// <param name="type">Target type</param>
         /// <param name="func">Found function</param>
         /// <returns>Whether or not successful</returns>
-        public bool TryGet(Type type, out IParseFuncInfo func);
+        public bool TryGet(Type? type, out IParseFuncInfo? func);
 
         #endregion
     }

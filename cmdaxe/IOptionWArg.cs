@@ -11,7 +11,7 @@ namespace cmdaxe
         ///     Argument display type; this tells the user what kind of argument should be inputted<br/>
         ///     Examples: "number", "name", "path", "directory"
         /// </summary>
-        public string ArgType { get; }
+        public string? ArgType { get; }
 
         #endregion
     }

@@ -21,7 +21,7 @@ namespace cmdaxe
         /// <exception cref="ArgumentNullException">
         ///     <paramref name="context"/> is null
         /// </exception>
-        internal static string MM_GetSyntax(IContext context, Type type)
+        internal static string? MM_GetSyntax(IContext context, Type type)
         {
             ArgumentNullException.ThrowIfNull(context);
             var testType = type;
@@ -40,7 +40,7 @@ namespace cmdaxe
                 try { getSyntax = method.CreateDelegate<GetSyntax>(); }
                 catch { goto next; }
                 // Call method
-                return (string)method.Invoke(null, [context, type]);
+                return (string?)method.Invoke(null, [context, type]);
                 // Next
                 next: testType = testType.BaseType;
             }
@@ -68,7 +68,7 @@ namespace cmdaxe
         ///     <br/>or<br/>
         ///     <paramref name="type"/> is null
         /// </exception>
-        protected static string MM__GetSyntax(IContext context, Type type)
+        protected static string? MM__GetSyntax(IContext context, Type type)
         {
             ArgumentNullException.ThrowIfNull(context);
             ArgumentNullException.ThrowIfNull(type);

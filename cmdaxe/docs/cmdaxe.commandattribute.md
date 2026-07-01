@@ -11,7 +11,7 @@ public class CommandAttribute : System.Attribute
 ```
 
 Inheritance [Object](https://learn.microsoft.com/en-us/dotnet/api/system.object) → [Attribute](https://learn.microsoft.com/en-us/dotnet/api/system.attribute) → [CommandAttribute](./cmdaxe.commandattribute.md)<br>
-Attributes [AttributeUsageAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.attributeusageattribute)
+Attributes [NullableContextAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute), [AttributeUsageAttribute](https://learn.microsoft.com/en-us/dotnet/api/system.attributeusageattribute)
 
 ## Properties
 
@@ -20,7 +20,7 @@ Attributes [AttributeUsageAttribute](https://learn.microsoft.com/en-us/dotnet/ap
 Command name
 
 ```csharp
-public string Name { get; }
+public string? Name { get; }
 ```
 
 #### Property Value
@@ -32,7 +32,7 @@ public string Name { get; }
 Group command belongs to
 
 ```csharp
-public string Group { get; }
+public string? Group { get; }
 ```
 
 #### Property Value
@@ -44,7 +44,7 @@ public string Group { get; }
 Command description
 
 ```csharp
-public string Desc { get; }
+public string? Desc { get; }
 ```
 
 #### Property Value
@@ -56,7 +56,7 @@ public string Desc { get; }
 Keyword for displaying help
 
 ```csharp
-public string HelpKeyword { get; }
+public string? HelpKeyword { get; }
 ```
 
 #### Property Value
@@ -94,21 +94,21 @@ Specifies a class as a command
 NOTE: In order for the class to be considered a valid command, it must contain a parameterless constructor
 
 ```csharp
-public CommandAttribute(string name = null, string group = null, string desc = null, string helpKeyword = "help", char helpShort = 'h')
+public CommandAttribute(string? name = null, string? group = null, string? desc = null, string? helpKeyword = "help", char helpShort = 'h')
 ```
 
 #### Parameters
 
-`name` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`name` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Command name
 
-`group` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`group` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Group command belongs to
 
-`desc` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`desc` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Command description
 
-`helpKeyword` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)<br>
+`helpKeyword` [String](https://learn.microsoft.com/en-us/dotnet/api/system.string)?<br>
 Keyword for displaying help
 
 `helpShort` [Char](https://learn.microsoft.com/en-us/dotnet/api/system.char)<br>

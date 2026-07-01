@@ -11,7 +11,7 @@ namespace cmdaxe
         public string Name { get; }
 
         /// <summary>Parameter description</summary>
-        public string Desc { get; }
+        public string? Desc { get; }
 
         #endregion
         
@@ -23,7 +23,7 @@ namespace cmdaxe
         /// <exception cref="ArgumentNullException">
         ///     <paramref name="instance"/> is null
         /// </exception>
-        public void SetValue(object instance, object value);
+        public void SetValue(object instance, object? value);
 
         #endregion
     }

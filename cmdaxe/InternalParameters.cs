@@ -10,7 +10,7 @@ namespace cmdaxe
     {
         #region parameter classes
 
-        private delegate void SetValue(object instance, object value);
+        private delegate void SetValue(object instance, object? value);
 
         private class EnumParseFunc : IParseFuncInfo
         {
@@ -28,7 +28,7 @@ namespace cmdaxe
                 f_Func = MM_TryParse;
             }
 
-            public static bool TryParse(Type type, out EnumParseFunc result)
+            public static bool TryParse(Type type, out EnumParseFunc? result)
             {
                 result = null;
                 if (type is null) return false;
@@ -64,7 +64,7 @@ namespace cmdaxe
 
             #region helper methods
 
-            private bool MM_TryParse(string input, out object result) =>
+            private bool MM_TryParse(string? input, out object? result) =>
                 Enum.TryParse(f_Type, input, false, out result);
 
             #endregion
@@ -83,7 +83,7 @@ namespace cmdaxe
             /// </summary>
             private FieldOrProp(
                 string name,
-                string desc,
+                string? desc,
                 Type type,
                 bool isArray,
                 ParameterAttribute attr,
@@ -97,7 +97,7 @@ namespace cmdaxe
                 f_Attr = attr;
             }
             
-            public static bool TryParse(FieldInfo field, out FieldOrProp result)
+            public static bool TryParse(FieldInfo? field, out FieldOrProp? result)
             {
                 result = default;
                 if (field is null) return false;
@@ -105,14 +105,14 @@ namespace cmdaxe
                 var attr = field.GetCustomAttribute<ParameterAttribute>();
                 if (attr is null) return false;
                 // Generate set action
-                void setValue(object instance, object value)
+                void setValue(object instance, object? value)
                 {
                     ArgumentNullException.ThrowIfNull(instance);
                     field.SetValue(instance, value);
                 }
                 // Get target type
                 Type type = field.FieldType.IsArray ? 
-                    field.FieldType.GetElementType() : 
+                    field.FieldType.GetElementType()! : 
                     field.FieldType;
                 // Success
                 result = new FieldOrProp(
@@ -125,7 +125,7 @@ namespace cmdaxe
                 return true;
             }
             
-            public static bool TryParse(PropertyInfo property, out FieldOrProp result)
+            public static bool TryParse(PropertyInfo? property, out FieldOrProp? result)
             {
                 result = default;
                 if (property is null) return false;
@@ -136,14 +136,14 @@ namespace cmdaxe
                 var setMethod = property.SetMethod;
                 if (setMethod is null) return false;
                 // Generate set action
-                void setValue(object instance, object value)
+                void setValue(object instance, object? value)
                 {
                     ArgumentNullException.ThrowIfNull(instance);
                     setMethod.Invoke(instance, [value]);
                 }
                 // Get target type
                 Type type = property.PropertyType.IsArray ? 
-                    property.PropertyType.GetElementType() : 
+                    property.PropertyType.GetElementType()! : 
                     property.PropertyType;
                 // Success
                 result = new FieldOrProp(
@@ -162,7 +162,7 @@ namespace cmdaxe
             
             private readonly string f_Name;
 
-            private readonly string f_Desc;
+            private readonly string? f_Desc;
             
             private readonly SetValue f_SetValue;
 
@@ -180,7 +180,7 @@ namespace cmdaxe
             public string Name => f_Name;
 
             /// <summary>Parameter desc</summary>
-            public string Desc => f_Desc;
+            public string? Desc => f_Desc;
             
             /// <summary>Action for setting the field or property</summary>
             public SetValue SetValue => f_SetValue;
@@ -236,7 +236,7 @@ namespace cmdaxe
             ///     <br/>- <paramref name="fieldOrProp"/> is not null
             ///     <br/>- <paramref name="parseFuncs"/> is not null
             /// </summary>
-            public static bool TryParse(FieldOrProp fieldOrProp, IParseFuncs parseFuncs, out ReqParam result)
+            public static bool TryParse(FieldOrProp fieldOrProp, IParseFuncs parseFuncs, out ReqParam? result)
             {
                 result = null;
                 // Check if attribute is valid
@@ -246,7 +246,7 @@ namespace cmdaxe
                 if (!MM_TryGetParseFunc(fieldOrProp.Type, parseFuncs, out var parseFunc))
                     return false;
                 // Success!!!
-                result = new ReqParam(fieldOrProp, parseFunc);
+                result = new ReqParam(fieldOrProp, parseFunc!);
                 return true;
             }
 
@@ -265,7 +265,7 @@ namespace cmdaxe
             public string Name => f_FieldOrProp.Name;
 
             /// <inheritdoc/>
-            public string Desc => f_FieldOrProp.Desc;
+            public string? Desc => f_FieldOrProp.Desc;
 
             /// <inheritdoc/>
             public bool IsArray => f_FieldOrProp.IsArray;
@@ -278,7 +278,7 @@ namespace cmdaxe
             #region methods
 
             /// <inheritdoc/>
-            public void SetValue(object instance, object value) => 
+            public void SetValue(object instance, object? value) => 
                 f_FieldOrProp.SetValue(instance, value);
 
             #endregion
@@ -302,7 +302,7 @@ namespace cmdaxe
             ///     Assume
             ///     <br/>- <paramref name="fieldOrProp"/> is not null
             /// </summary>
-            public static bool TryParse(FieldOrProp fieldOrProp, out OptParamFlag result)
+            public static bool TryParse(FieldOrProp fieldOrProp, out OptParamFlag? result)
             {
                 result = null;
                 // Check if attribute is valid
@@ -334,7 +334,7 @@ namespace cmdaxe
             public char Shortcut => f_Shortcut;
 
             /// <inheritdoc/>
-            public string Desc => f_FieldOrProp.Desc;
+            public string? Desc => f_FieldOrProp.Desc;
 
             /// <inheritdoc/>
             public bool IsHelp => false;
@@ -344,7 +344,7 @@ namespace cmdaxe
             #region methods
 
             /// <inheritdoc/>
-            public void SetValue(object instance, object value) => 
+            public void SetValue(object instance, object? value) => 
                 f_FieldOrProp.SetValue(instance, value);
 
             #endregion
@@ -359,7 +359,7 @@ namespace cmdaxe
             ///     <br/>- <paramref name="fieldOrProp"/> is not null
             ///     <br/>- <paramref name="parseFunc"/> is not null
             /// </summary>
-            private OptParamWArg(FieldOrProp fieldOrProp, char shortcut, IParseFuncInfo parseFunc, string argType)
+            private OptParamWArg(FieldOrProp fieldOrProp, char shortcut, IParseFuncInfo parseFunc, string? argType)
             {
                 f_FieldOrProp = fieldOrProp;
                 f_Shortcut = shortcut;
@@ -372,7 +372,7 @@ namespace cmdaxe
             ///     <br/>- <paramref name="fieldOrProp"/> is not null
             ///     <br/>- <paramref name="parseFuncs"/> is not null
             /// </summary>
-            public static bool TryParse(FieldOrProp fieldOrProp, IParseFuncs parseFuncs, out OptParamWArg result)
+            public static bool TryParse(FieldOrProp fieldOrProp, IParseFuncs parseFuncs, out OptParamWArg? result)
             {
                 result = null;
                 // Check if attribute is valid
@@ -382,7 +382,7 @@ namespace cmdaxe
                 if (!MM_TryGetParseFunc(fieldOrProp.Type, parseFuncs, out var parseFunc))
                     return false;
                 // Success!!!
-                result = new OptParamWArg(fieldOrProp, attr.Shortcut, parseFunc, attr.ArgType);
+                result = new OptParamWArg(fieldOrProp, attr.Shortcut, parseFunc!, attr.ArgType);
                 return true;
             }
 
@@ -393,7 +393,7 @@ namespace cmdaxe
             private readonly FieldOrProp f_FieldOrProp;
             private readonly char f_Shortcut;
             private readonly IParseFuncInfo f_ParseFunc;
-            private readonly string f_ArgType;
+            private readonly string? f_ArgType;
 
             #endregion
 
@@ -406,7 +406,7 @@ namespace cmdaxe
             public char Shortcut => f_Shortcut;
 
             /// <inheritdoc/>
-            public string Desc => f_FieldOrProp.Desc;
+            public string? Desc => f_FieldOrProp.Desc;
 
             /// <inheritdoc/>
             public bool IsArray => f_FieldOrProp.IsArray;
@@ -415,20 +415,20 @@ namespace cmdaxe
             public IParseFuncInfo ParseFunc => f_ParseFunc;
 
             /// <inheritdoc/>
-            public string ArgType => f_ArgType;
+            public string? ArgType => f_ArgType;
 
             #endregion
 
             #region methods
 
             /// <inheritdoc/>
-            public void SetValue(object instance, object value) => 
+            public void SetValue(object instance, object? value) => 
                 f_FieldOrProp.SetValue(instance, value);
 
             #endregion
         }
 
-        private class HelpParam(string name, char shortcut) : IOptionFlag
+        private class HelpParam(string? name, char shortcut) : IOptionFlag
         {
             #region fields
 
@@ -457,7 +457,7 @@ namespace cmdaxe
             #region methods
 
             /// <inheritdoc/>
-            public void SetValue(object instance, object value) { }
+            public void SetValue(object instance, object? value) { }
 
             #endregion
         }
@@ -482,7 +482,7 @@ namespace cmdaxe
                 f_Items.Values.GetEnumerator();
 
             /// <inheritdoc/>
-            public bool TryGet(string name, out T func)
+            public bool TryGet(string? name, out T? func)
             {
                 if (name is not null)
                     return f_Items.TryGetValue(name, out func);
@@ -521,7 +521,7 @@ namespace cmdaxe
                 f_Items.Values.GetEnumerator();
 
             /// <inheritdoc/>
-            public bool TryGet(char shortcut, out IOption func) =>
+            public bool TryGet(char shortcut, out IOption? func) =>
                 f_Items.TryGetValue(shortcut, out func);
 
             #endregion
@@ -560,7 +560,7 @@ namespace cmdaxe
             ArgumentNullException.ThrowIfNull(type);
             ArgumentNullException.ThrowIfNull(parseFuncs);
             // Get help flag
-            HelpParam helpParam = null;
+            HelpParam? helpParam = null;
             var attr = type.GetCustomAttribute<CommandAttribute>();
             if (attr is not null && ((!string.IsNullOrEmpty(attr.HelpKeyword)) || attr.HelpShort != '\0'))
                 helpParam = new(attr.HelpKeyword, attr.HelpShort);
@@ -571,30 +571,30 @@ namespace cmdaxe
             {
                 if (!FieldOrProp.TryParse(fieldInfo, out var field))
                     continue;
-                if (ReqParam.TryParse(field, parseFuncs, out var required))
-                    reqParams.Add(required);
-                else if (OptParamFlag.TryParse(field, out var optionFlag))
-                    optParams.Add(optionFlag);
-                else if (OptParamWArg.TryParse(field, parseFuncs, out var optionWArg))
-                    optParams.Add(optionWArg);
+                if (ReqParam.TryParse(field!, parseFuncs, out var required))
+                    reqParams.Add(required!);
+                else if (OptParamFlag.TryParse(field!, out var optionFlag))
+                    optParams.Add(optionFlag!);
+                else if (OptParamWArg.TryParse(field!, parseFuncs, out var optionWArg))
+                    optParams.Add(optionWArg!);
             }
             foreach (var propertyInfo in type.GetProperties(BINDING_FLAGS))
             {
                 if (!FieldOrProp.TryParse(propertyInfo, out var property))
                     continue;
-                if (ReqParam.TryParse(property, parseFuncs, out var required))
-                    reqParams.Add(required);
-                else if (OptParamFlag.TryParse(property, out var optionFlag))
-                    optParams.Add(optionFlag);
-                else if (OptParamWArg.TryParse(property, parseFuncs, out var optionWArg))
-                    optParams.Add(optionWArg);
+                if (ReqParam.TryParse(property!, parseFuncs, out var required))
+                    reqParams.Add(required!);
+                else if (OptParamFlag.TryParse(property!, out var optionFlag))
+                    optParams.Add(optionFlag!);
+                else if (OptParamWArg.TryParse(property!, parseFuncs, out var optionWArg))
+                    optParams.Add(optionWArg!);
             }
             // Create collection
             f_Items = [];
             f_Required = new();
             f_Optional = new();
             f_Shortcuts = new();
-            IRequired reqArray = null; // Save this one for last
+            IRequired? reqArray = null; // Save this one for last
             if (helpParam is not null)
             {
                 // Add
@@ -647,7 +647,7 @@ namespace cmdaxe
             f_Items.Values.GetEnumerator();
 
         /// <inheritdoc/>
-        public bool TryGet(string name, out IParameter func)
+        public bool TryGet(string? name, out IParameter? func)
         {
             if (name is not null)
                 return f_Items.TryGetValue(name, out func);
@@ -686,7 +686,7 @@ namespace cmdaxe
         /// <param name="parseFuncs"></param>
         /// <param name="parseFunc"></param>
         /// <returns></returns>
-        private static bool MM_TryGetParseFunc(Type type, IParseFuncs parseFuncs, out IParseFuncInfo parseFunc)
+        private static bool MM_TryGetParseFunc(Type type, IParseFuncs parseFuncs, out IParseFuncInfo? parseFunc)
         {
             if (parseFuncs.TryGet(type, out parseFunc))
                 return true;
